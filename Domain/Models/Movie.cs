@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    internal class Movie
+    public class Movie
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -11,5 +11,6 @@
         public int DislikesCount { get; set; }
         public string PosterUrl { get; set; }
         public string MovieUrl { get; set; }
+        public Season Season { get; set; }
     }
 }

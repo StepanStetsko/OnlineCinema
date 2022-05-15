@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    internal class Review
+    public class Review
     {
         public int Id { get; set; }
         public string ReviewTitle { get; set; }

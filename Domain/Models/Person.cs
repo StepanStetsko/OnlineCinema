@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    internal class Person
+    public class Person
     {
         public int Id { get; set; }
         public PersonInfo PersonInfo { get; set; }

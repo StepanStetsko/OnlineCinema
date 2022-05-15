@@ -1,9 +1,9 @@
-﻿namespace Domain.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Domain.Models
 {
-    internal class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public List<Season> Library { get; set; }
         public List<Review> Reviews { get; set; }
     }
