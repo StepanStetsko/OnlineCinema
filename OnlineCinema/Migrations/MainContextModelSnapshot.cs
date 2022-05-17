@@ -205,14 +205,39 @@ namespace OnlineCinema.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Seasons");
+                });
+
+            modelBuilder.Entity("Domain.Models.WatchStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SeasonId");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Seasons");
+                    b.ToTable("WatchStatus");
                 });
 
             modelBuilder.Entity("GenreSeason", b =>
@@ -453,6 +478,21 @@ namespace OnlineCinema.Migrations
                     b.ToTable("PersonSeason");
                 });
 
+            modelBuilder.Entity("SeasonUser", b =>
+                {
+                    b.Property<int>("FavoriteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LikedByUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FavoriteId", "LikedByUsersId");
+
+                    b.HasIndex("LikedByUsersId");
+
+                    b.ToTable("SeasonUser");
+                });
+
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -499,11 +539,21 @@ namespace OnlineCinema.Migrations
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("Domain.Models.Season", b =>
+            modelBuilder.Entity("Domain.Models.WatchStatus", b =>
                 {
-                    b.HasOne("Domain.Models.User", null)
-                        .WithMany("Library")
+                    b.HasOne("Domain.Models.Season", "Season")
+                        .WithMany()
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithMany("UserWatchList")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Season");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("GenreSeason", b =>
@@ -587,6 +637,21 @@ namespace OnlineCinema.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SeasonUser", b =>
+                {
+                    b.HasOne("Domain.Models.Season", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikedByUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Models.Season", b =>
                 {
                     b.Navigation("Movies");
@@ -596,9 +661,9 @@ namespace OnlineCinema.Migrations
 
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
-                    b.Navigation("Library");
-
                     b.Navigation("Reviews");
+
+                    b.Navigation("UserWatchList");
                 });
 #pragma warning restore 612, 618
         }

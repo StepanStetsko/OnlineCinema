@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    internal class SeasonRepository : BaseRepository<Season>
+    public class SeasonRepository : BaseRepository<Season>
     {
         public SeasonRepository(MainContext context) : base(context)
         {

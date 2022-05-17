@@ -30,7 +30,7 @@ namespace DLL.Repository
             return await Dbset.ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task Create(TEntity entity)
+        public virtual async Task Create(TEntity entity)
         {
             Dbset.Add(entity);
             await mainContext.SaveChangesAsync().ConfigureAwait(false);

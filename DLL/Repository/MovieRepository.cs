@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    internal class MovieRepository : BaseRepository<Movie>
+    public class MovieRepository : BaseRepository<Movie>
     {
         public MovieRepository(MainContext context) : base(context)
         {

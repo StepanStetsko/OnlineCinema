@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    internal class GenreRepository : BaseRepository<Genre>
+    public class GenreRepository : BaseRepository<Genre>
     {
         public GenreRepository(MainContext context) : base(context)
         {

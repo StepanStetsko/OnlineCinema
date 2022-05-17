@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineCinema.Migrations
 {
-    public partial class First : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,6 +76,28 @@ namespace OnlineCinema.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonInfos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Seasons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ImdbRating = table.Column<float>(type: "real", nullable: false),
+                    LocalRating = table.Column<float>(type: "real", nullable: false),
+                    AgeRating = table.Column<byte>(type: "tinyint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrailerUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PosterUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Seasons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,33 +207,6 @@ namespace OnlineCinema.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Seasons",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ImdbRating = table.Column<float>(type: "real", nullable: false),
-                    LocalRating = table.Column<float>(type: "real", nullable: false),
-                    AgeRating = table.Column<byte>(type: "tinyint", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrailerUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PosterUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Seasons", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Seasons_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Persons",
                 columns: table => new
                 {
@@ -304,6 +299,56 @@ namespace OnlineCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Reviews_Seasons_ReviewedId",
                         column: x => x.ReviewedId,
+                        principalTable: "Seasons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SeasonUser",
+                columns: table => new
+                {
+                    FavoriteId = table.Column<int>(type: "int", nullable: false),
+                    LikedByUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SeasonUser", x => new { x.FavoriteId, x.LikedByUsersId });
+                    table.ForeignKey(
+                        name: "FK_SeasonUser_AspNetUsers_LikedByUsersId",
+                        column: x => x.LikedByUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SeasonUser_Seasons_FavoriteId",
+                        column: x => x.FavoriteId,
+                        principalTable: "Seasons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WatchStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SeasonId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WatchStatus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WatchStatus_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WatchStatus_Seasons_SeasonId",
+                        column: x => x.SeasonId,
                         principalTable: "Seasons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -403,8 +448,18 @@ namespace OnlineCinema.Migrations
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seasons_UserId",
-                table: "Seasons",
+                name: "IX_SeasonUser_LikedByUsersId",
+                table: "SeasonUser",
+                column: "LikedByUsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WatchStatus_SeasonId",
+                table: "WatchStatus",
+                column: "SeasonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WatchStatus_UserId",
+                table: "WatchStatus",
                 column: "UserId");
         }
 
@@ -438,6 +493,12 @@ namespace OnlineCinema.Migrations
                 name: "Reviews");
 
             migrationBuilder.DropTable(
+                name: "SeasonUser");
+
+            migrationBuilder.DropTable(
+                name: "WatchStatus");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -447,13 +508,13 @@ namespace OnlineCinema.Migrations
                 name: "Persons");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Seasons");
 
             migrationBuilder.DropTable(
                 name: "PersonInfos");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

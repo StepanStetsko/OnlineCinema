@@ -1,6 +1,15 @@
-﻿@{
+﻿@model List<Domain.Models.Season>;
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
+<ul>
+@foreach (var item in Model)
+{   
+    <li>item.Title</li>
+}
+</ul>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>

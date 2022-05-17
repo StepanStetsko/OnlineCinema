@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    internal class ReviewRepository : BaseRepository<Review>
+    public class ReviewRepository : BaseRepository<Review>
     {
         public ReviewRepository(MainContext context) : base(context)
         {

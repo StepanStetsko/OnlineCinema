@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repository
 {
-    internal class PersonRepository : BaseRepository<Person>
+    public class PersonRepository : BaseRepository<Person>
     {
         public PersonRepository(MainContext context) : base(context)
         {

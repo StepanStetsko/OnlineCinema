@@ -8,9 +8,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DLL.Repository.Interfaces
+namespace DLL.Repository
 {
-    internal class UserRepository : BaseRepository<User>
+    public class UserRepository : BaseRepository<User>
     {
         public UserRepository(MainContext context) : base(context)
         {
@@ -18,12 +18,12 @@ namespace DLL.Repository.Interfaces
 
         public async override Task<IEnumerable<User>> GetWhere(Expression<Func<User, bool>> predicate)
         {
-            return await this.Dbset.Include(x => x.Reviews).Include(y => y.Library).Where(predicate).ToListAsync().ConfigureAwait(false);
+            return await this.Dbset.Include(x => x.Reviews).Include(y => y.Favorite).Include(x => x.UserWatchList).ThenInclude(y => y.Season).Where(predicate).ToListAsync().ConfigureAwait(false);
         }
 
-        public override async Task<IEnumerable<User>> GetAllAsync()
+        public async override Task<IEnumerable<User>> GetAllAsync()
         {
-            return await this.Dbset.Include(x => x.Reviews).Include(y => y.Library).ToListAsync().ConfigureAwait(false);
+            return await this.Dbset.ToListAsync().ConfigureAwait(false);
         }
     }
 }

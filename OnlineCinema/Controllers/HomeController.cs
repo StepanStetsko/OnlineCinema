@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL.Services;
+using Microsoft.AspNetCore.Mvc;
 using OnlineCinema.Models;
 using System.Diagnostics;
 
@@ -7,15 +8,26 @@ namespace OnlineCinema.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SeasonService _seasonService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SeasonService seasonService)
         {
             _logger = logger;
+            _seasonService = seasonService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var seasonsTemp = await _seasonService.GetSeasons();
+
+            return View(seasonsTemp.ToList());
+        }
+
+        public async Task<IActionResult> Details(int seasonId)
+        {
+            var season = await _seasonService.ShowDetails(seasonId);
+
+            return View(season);
         }
 
         public IActionResult Privacy()

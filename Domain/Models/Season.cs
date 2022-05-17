@@ -2,8 +2,14 @@
 {
     public class Season
     {
+        public Season()
+        {
+            Movies = new List<Movie>();
+        }
         public int Id { get; set; }
         public string Title { get; set; }
+        public List<User> LikedByUsers { get; set; }
+        public string Type { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public float ImdbRating { get; set; }
