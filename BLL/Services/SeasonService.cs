@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DLL.Repository;
@@ -19,14 +20,21 @@ namespace BLL.Services
 
         public async Task<IEnumerable<Season>> GetSeasons()
         {
-            return await _seasonRepository.GetAllAsync();
+            return (await _seasonRepository.GetAllAsync());
         }
         public async Task<Season> ShowDetails(int seasonId)
         {
             var seasonTemp = await _seasonRepository.GetWhere(x => x.Id == seasonId);
             return seasonTemp.First();
         }
-        public async Task CreateSeason(Season season)
+
+        public async Task<IEnumerable<Season>> GetSeasonBy(Expression<Func<Season, bool>> predicate)
+        {
+            var seasonTemp = await _seasonRepository.GetWhere(predicate);
+            return seasonTemp;
+        }
+
+        public async Task CreateSeasonAsync(Season season)
         {
             await _seasonRepository.Create(season);
         }

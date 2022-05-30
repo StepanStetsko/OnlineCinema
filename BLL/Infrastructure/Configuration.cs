@@ -20,7 +20,7 @@ namespace BLL.Infrastructure
             serviceCollection.AddTransient<ReviewRepository>();
             serviceCollection.AddTransient<PersonRepository>();
             serviceCollection.AddTransient<GenreRepository>();
-            serviceCollection.AddTransient<WatchListRepository>();
+            serviceCollection.AddTransient<WatchListRepository>();            
         }
     }
 }

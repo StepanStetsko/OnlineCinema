@@ -2,32 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineCinema.Models;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace OnlineCinema.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SeasonService _seasonService;
 
-        public HomeController(ILogger<HomeController> logger, SeasonService seasonService)
+
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _seasonService = seasonService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var seasonsTemp = await _seasonService.GetSeasons();
-
-            return View(seasonsTemp.ToList());
-        }
-
-        public async Task<IActionResult> Details(int seasonId)
-        {
-            var season = await _seasonService.ShowDetails(seasonId);
-
-            return View(season);
+            return View();
         }
 
         public IActionResult Privacy()

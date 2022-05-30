@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OnlineCinema.Migrations
 {
-    public partial class first : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,12 +86,15 @@ namespace OnlineCinema.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Views = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImdbRating = table.Column<float>(type: "real", nullable: false),
                     LocalRating = table.Column<float>(type: "real", nullable: false),
                     AgeRating = table.Column<byte>(type: "tinyint", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SeasonUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TrailerUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PosterUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -258,6 +261,7 @@ namespace OnlineCinema.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Timing = table.Column<short>(type: "smallint", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LikesCount = table.Column<int>(type: "int", nullable: false),

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OnlineCinema.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "GetUsers";
+}
+
+<h1>GetUsers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayName("Roles")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                    @foreach (var item2 in item.Roles)
+                    {
+                        <input type="checkbox" class="roleRadio" name="role">
+                        <label for="role">@item2</label>
+                    }
+            </td>
+            <td>
+                <a class="sendBtn" >Set role</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

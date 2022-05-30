@@ -1,5 +1,6 @@
 ﻿using DLL.Repository;
 using Domain.Models;
+using System.Linq.Expressions;
 
 namespace BLL.Services
 {
@@ -21,6 +22,16 @@ namespace BLL.Services
 
             userTemp.Favorite.Add(seasonTemp);
             await _userRepository.Update(userTemp);
+        }
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var userTemp = await _userRepository.GetAllAsync();
+            return userTemp;
+        }
+        public async Task<IEnumerable<User>> GetUserByCondition(Expression<Func<User, bool>> predicate)
+        {
+            var userTemp = await _userRepository.GetWhere(predicate);
+            return userTemp;
         }
 
         public async Task RemoveFromFavorite(int seasonId, string currentUserId)

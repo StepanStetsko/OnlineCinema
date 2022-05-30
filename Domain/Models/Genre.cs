@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string GenreName { get; set; }
-        public List<Season> Relationships { get; set; }
+        public List<Season> Relationships { get; set; } = new List<Season>();
     }
 }
