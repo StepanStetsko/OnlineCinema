@@ -10,63 +10,81 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateNewSeason" asp-controller="Media" enctype="multipart/form-data">
+        <form  id="season-form" enctype="multipart/form-data" onsubmit="return sendJson(this)">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control"  value="fff"/>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
+                <input asp-for="Type" class="form-control"  value="fff" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <input asp-for="Status" class="form-control"  value="fff"/>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateStart" class="control-label"></label>
-                <input asp-for="DateStart" class="form-control" />
+                <input asp-for="DateStart" class="form-control"  />
                 <span asp-validation-for="DateStart" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateEnd" class="control-label"></label>
-                <input asp-for="DateEnd" class="form-control" />
+                <input asp-for="DateEnd" class="form-control"  />
                 <span asp-validation-for="DateEnd" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ImdbRating" class="control-label"></label>
-                <input asp-for="ImdbRating" class="form-control" />
+                <input asp-for="ImdbRating" class="form-control"  value="42"/>
                 <span asp-validation-for="ImdbRating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LocalRating" class="control-label"></label>
-                <input asp-for="LocalRating" class="form-control" />
+                <input asp-for="LocalRating" class="form-control"  value="423"/>
                 <span asp-validation-for="LocalRating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AgeRating" class="control-label"></label>
-                <input asp-for="AgeRating" class="form-control" />
+                <input asp-for="AgeRating" class="form-control" value="342"/>
                 <span asp-validation-for="AgeRating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <input asp-for="Description" class="form-control"  value="fff"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TrailerUrl" class="control-label"></label>
-                <input asp-for="TrailerUrl" class="form-control" />
+                <input asp-for="TrailerUrl" class="form-control"  value="fff"/>
                 <span asp-validation-for="TrailerUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="poster" class="control-label"></label>
-                <input name="poster" type="file" class="form-control" />
+                <input name="poster" type="file" class="form-control" value="fff"/>
                 <span asp-validation-for="PosterUrl" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label for="new-item">Series</label>
+                <input name="new-item" id="form-btn" type="button" value="+"/>
+            </div>
+            <div >
+
+            </div>
+            <div id="beforeFilm"></div>
+            <div class="form-group season-series" style="display: none; border: 1px solid black; padding: 10px; margin-bottom: 10px;">   
+                <input type="text" id="movieTitle" placeholder="Title"  value="aaa"/>
+                <input type="date" id="movieReleaseDate" placeholder="ReleaseDate" value="1999-12-21"/>
+                <input type="number" id="movieTiming" placeholder="Timing" value="321"/>
+                <input type="text" id="movieDescription" placeholder="Description" value="aaa"/>
+                <input type="text" id="moviePosterUrl" placeholder="PosterUrl" value="aaa"/>
+                <input type="text" id="movieMovieUrl" placeholder="MovieUrl" value="aaa"/>
+                <button type="button" id="add-movie-btn">Add</button>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -80,4 +98,62 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const movie = [];
+
+        $("form").submit(function() { return false; });
+           
+        document.querySelector('#form-btn').addEventListener('click', () => {                              
+            document.querySelector('.season-series').style.display = 'block'                      
+        })
+
+        document.querySelector('#add-movie-btn').addEventListener('click', () => {
+            movie.push({               
+                Title: $('#movieTitle').val(),
+                ReleaseDate: $('#movieReleaseDate').val(),
+                Timing: $('#movieTiming').val(),
+                Description: $('#movieDescription').val(),
+                PosterUrl: $('#moviePosterUrl').val(),
+                MovieUrl: $('#movieMovieUrl').val(),               
+            })
+
+            console.log(movie)
+        })
+
+       function sendJson(item){
+
+           let season = {            
+                Title: item.Title.value,
+                Type: item.Type.value,
+                Status: item.Status.value,
+                DateStart: item.DateStart.value,
+                DateEnd: item.DateEnd.value,
+                ImdbRating: item.ImdbRating.value,
+                LocalRating: item.LocalRating.value,
+                AgeRating: item.AgeRating.value,
+                Description:item.Description.value,
+                TrailerUrl: item.TrailerUrl.value,  
+                Movies: [],
+            }
+             season.Movies = movie
+               
+             postData('Media/CreateNewSeason', season) 
+                  .then((data) => {   
+                      console.log(data);  
+                  });        
+              }
+         
+         async function postData(url = '', data = {}) {                
+             const response = await fetch(url, {                   
+                 method: 'POST',                                                                                                                    
+                 headers: {                        
+                     'Content-Type': 'application/json'                       
+                 },                                                 
+                 body: JSON.stringify(data)                  
+            });
+                 
+             return await response.json(); 
+}
+
+    </script>
 }

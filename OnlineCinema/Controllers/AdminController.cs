@@ -2,6 +2,7 @@
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using OnlineCinema.Models;
 using System.Text.Json;
@@ -15,16 +16,19 @@ namespace OnlineCinema.Controllers
         private readonly UserService _userService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly IEmailSender _emailSender;
 
-        public AdminController(UserService userService, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserService userService, UserManager<User> userManager, RoleManager<IdentityRole> roleManager,IEmailSender emailSender)
         {
             _userService = userService;   
             _userManager = userManager;
             _roleManager = roleManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
         {
+            //await _emailSender.SendEmailAsync("wiyoci2475@sceath.com", "hkhk", "kljlkjl");
             return View();
         }
 

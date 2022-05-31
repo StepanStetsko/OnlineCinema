@@ -12,6 +12,7 @@ namespace OnlineCinema.Infrastructure
             serviceCollection.Services.AddTransient<GenreService>();
             serviceCollection.Services.AddTransient<MovieService>();
             serviceCollection.Services.AddTransient<PersonService>();
+
         }
     }
 }

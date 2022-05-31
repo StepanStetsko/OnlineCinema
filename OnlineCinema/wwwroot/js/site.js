@@ -25,7 +25,6 @@ getResponseJson('Media/GetMedia').then(data => {
     })
   
 })
- 
 
 getResponseJson('Media/GetMedia').then(data => {
 

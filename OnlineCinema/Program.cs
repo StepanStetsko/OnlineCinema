@@ -1,8 +1,11 @@
-using BLL.Infrastructure;
+
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DLL.Context;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BLL.Services;
+using OnlineCinema;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,9 @@ var identityBuilder = builder.Services.AddDefaultIdentity<User>(options => {
 }).AddRoles<IdentityRole>();
 
 BLL.Infrastructure.Configuration.ConfigurationService(builder.Services, connectionString, identityBuilder);
+
+builder.Services.AddTransient<IEmailSender, SenGridEmailSender>();
+
 OnlineCinema.Infrastructure.Configuration.ConfigurationService(identityBuilder);
 
 builder.Services.AddControllersWithViews();

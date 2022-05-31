@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCinema", "OnlineCinema\OnlineCinema.csproj", "{0D892F2C-5268-4C1D-99F9-2DC00F67CED9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCinema", "OnlineCinema\OnlineCinema.csproj", "{0D892F2C-5268-4C1D-99F9-2DC00F67CED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{937ABFB0-CEC0-4B96-AB8C-BEC6229D65F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{937ABFB0-CEC0-4B96-AB8C-BEC6229D65F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLL", "DLL\DLL.csproj", "{F01A143C-91F3-47F5-85B8-929C7884F4D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLL", "DLL\DLL.csproj", "{F01A143C-91F3-47F5-85B8-929C7884F4D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F0198926-7F2C-4984-99FC-1C88D7872098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{F0198926-7F2C-4984-99FC-1C88D7872098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
